@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: teste-image-gcr
+  name: teste-image-gcr
+  namespace: teste-secret
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: teste-image-gcr
+  template:
+    metadata:
+      labels:
+        app: teste-image-gcr
+    spec:
+      imagePullSecrets:
+        - name: countly-registry
+      containers:
+      - image: gcr.io/cicd-conciliacaopdv/teste_image:v.0.0.1
+        name: teste-image-gcr-container
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 600m
+            memory: 768Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+      restartPolicy: Always
