@@ -19,7 +19,7 @@ spec:
       imagePullSecrets:
         - name: countly-registry
       containers:
-      - image: gcr.io/cicd-conciliacaopdv/teste_image:v0.0.2
+      - image: gcr.io/cicd-conciliacaopdv/teste_image:v0.0.3
         name: teste-image-gcr-container
         imagePullPolicy: Always
         resources:
